@@ -4,10 +4,7 @@ module.exports = {
   networks: {
     hardhat: {
     },
-    mumbai: {
-      chainId: 137,
-      name: 'MATIC',
-      portisId: 'matic',
+    matic: {
       url: "https://rpc-mumbai.maticvigil.com",
       accounts: ["0xab5694775b36b4cC86E5288f4a6A906C82C8EF1C"]
     }

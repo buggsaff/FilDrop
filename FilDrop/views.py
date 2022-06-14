@@ -5,6 +5,8 @@ from API_KEYS.keys import keys
 from pathlib import Path
 from utility.nftstorage import NftStorage
 import json
+import shutil
+from pathlib2 import Path as Path2_
 
 base_uri = "ipfs://"
 NFTSTORAGE_API_KEY = keys['NFTSTORAGE']
@@ -138,6 +140,8 @@ def ImageUpload(request,pkk):
     
     nstorage = {}
     c = NftStorage(NFTSTORAGE_API_KEY)
+    print('LISTSTSTST')
+    print(img_file_list)
     cid = c.upload(img_file_list, 'image/png')
     usercollection_obj = UserCollection.objects.get(id=pkk)
     usercollection_obj.collection_hash=cid
@@ -163,6 +167,26 @@ def ImageUpload(request,pkk):
 
 
 def Deploy(request,collectionname):
+    path =Path(os.path.normpath( str(BASE_DIR) +'/NFT.sol'))
+    path2 =Path(os.path.normpath( str(BASE_DIR) +'/contracts/NFT.sol'))
+    WalletAddress = request.session['WalletAddress']
+    user = User.objects.get(WalletAddress=WalletAddress)
+    obj = UserCollection.objects.get(collection_name=collectionname,user=user)
+    print(obj.collection_hash)
+    shutil.copyfile(path,path2)
+    file = Path2_(path2)
+    data = file.read_text()
+    data = data.replace("USER_ADDRESS", WalletAddress)
+    file.write_text(data)
+
+    file = Path2_(path2)
+    data = file.read_text()
+    data = data.replace("TOKENURI", str("https://ipfs.io/ipfs/")+str(obj.collection_hash))
+    file.write_text(data)
+
+    
+    os.system("npx hardhat run scripts/deploy.js --network matic")
+
 
 
     return render(request,'deploy.html')
