@@ -9,7 +9,10 @@ contract MyNFT is ERC721URIStorage {
     Counters.Counter private _tokenIds;
 
     constructor() ERC721("MyNFT", "MNFT") {
-        mintNFT(0x4caf27060d1543cf78f1e9f479baa5073fef9bf5, "https://ipfs.io/ipfs/bafybeiddj5umbge4jhmqloqstw325a2y46fvm6mdaheatoqbbazr5y5soq");
+        mintNFT(
+            0xab5694775b36b4cC86E5288f4a6A906C82C8EF1C,
+            "https://ipfs.io/ipfs/bafybeiepg6wq5eeci6nilxpgmo2r27npiemvwwlrierhwjxgydzaaljhhy"
+        );
     }
 
     function mintNFT(address recipient, string memory tokenURI)

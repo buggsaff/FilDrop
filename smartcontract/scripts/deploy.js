@@ -1,15 +1,13 @@
 require("@nomiclabs/hardhat-ethers");
+
 module.exports = {
-  defaultNetwork: "matic",
   networks: {
+    defaultNetwork: "mumbai",
     hardhat: {
     },
     mumbai: {
-      chainId: 137,
-      name: 'MATIC',
-      portisId: 'matic',
-      url: "https://rpc-mumbai.maticvigil.com",
-      accounts: ["0xab5694775b36b4cC86E5288f4a6A906C82C8EF1C"]
+      url: "https://polygon-mumbai.g.alchemy.com/v2/Yhxph16ZcUI-mMhwVyS9p3R1g45fcuIu",
+      accounts: ['0xab5694775b36b4cC86E5288f4a6A906C82C8EF1C']
     }
   },
   solidity: {

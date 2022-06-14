@@ -7,6 +7,7 @@ from utility.nftstorage import NftStorage
 import json
 import shutil
 from pathlib2 import Path as Path2_
+import requests
 
 base_uri = "ipfs://"
 NFTSTORAGE_API_KEY = keys['NFTSTORAGE']
@@ -32,6 +33,8 @@ def Login(request):
         WalletAddress = request.POST.get('WalletAddress')
         request.session['WalletAddress'] = WalletAddress
         obj = User.objects.get_or_create(WalletAddress=WalletAddress)
+        print('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
+        print(WalletAddress)
         return redirect('userpage')
     else:
         return redirect('home')
@@ -172,26 +175,47 @@ def Deploy(request,collectionname):
     path =Path(os.path.normpath( str(BASE_DIR) +'/NFT.sol'))
     path2 =Path(os.path.normpath( str(BASE_DIR) +'/contracts/NFT.sol'))
     WalletAddress = request.session['WalletAddress']
-    user = User.objects.get(WalletAddress=WalletAddress)
-    obj = UserCollection.objects.get(collection_name=collectionname,user=user)
-    print(obj.collection_hash)
-    shutil.copyfile(path,path2)
-    file = Path2_(path2)
-    data = file.read_text()
-    data = data.replace("USER_ADDRESS", WalletAddress)
-    file.write_text(data)
+    print(WalletAddress)
+    url = "https://api.nftport.xyz/v0/contracts"
+    payload = "{\n  \"chain\": \"polygon\",\n  \"name\": \"CRYPTOPUNKS\",\n  \"symbol\": \"CYBER\",\n  \"owner_address\":wallet,\n  \"metadata_updatable\": false,\n  \"type\": \"erc721\"\n}"
+    
 
-    file = Path2_(path2)
-    data = file.read_text()
-    data = data.replace("TOKENURI", str("https://ipfs.io/ipfs/")+str(obj.collection_hash))
-    file.write_text(data)
+    payload = payload.replace('CRYPTOPUNKS',"NFTGEN")
+    payload = payload.replace('CYBER',"MATIC")
+    payload = payload.replace('wallet','"'+WalletAddress+'"')
+
+    headers = {
+        'Content-Type': "application/json",
+        'Authorization': "4c658b59-2263-4cb8-a3c4-dacca73e4700"
+    }
+
+    response = requests.request("POST", url, data=payload, headers=headers)
+    #print(response.text)
+    print('--------------------')
+    print(response)
+    return render(request,'deploy.html',{'response':response.text})
+
+
+
+
+    # user = User.objects.get(WalletAddress=WalletAddress)
+    # obj = UserCollection.objects.get(collection_name=collectionname,user=user)
+    # print(obj.collection_hash)
+    # shutil.copyfile(path,path2)
+    # file = Path2_(path2)
+    # data = file.read_text()
+    # WalletAddress="0x4cAF27060d1543cF78f1E9f479baA5073fEf9BF5"
+    # data = data.replace("USER_ADDRESS", WalletAddress)
+    # file.write_text(data)
+
+    # file = Path2_(path2)
+    # data = file.read_text()
+    # data = data.replace("TOKENURI", str("https://ipfs.io/ipfs/")+str(obj.collection_hash))
+    # file.write_text(data)
 
     
-    os.system("npx hardhat run scripts/deploy.js --network matic")
+    # os.system("npx hardhat run scripts/deploy.js")
 
-
-
-    return render(request,'deploy.html')
 
 
 
