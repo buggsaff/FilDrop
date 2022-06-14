@@ -140,8 +140,9 @@ def ImageUpload(request,pkk):
     
     nstorage = {}
     c = NftStorage(NFTSTORAGE_API_KEY)
-    print('LISTSTSTST')
+    print('LISTSTSTST----------------------------------------------------------------------')
     print(img_file_list)
+ 
     cid = c.upload(img_file_list, 'image/png')
     usercollection_obj = UserCollection.objects.get(id=pkk)
     usercollection_obj.collection_hash=cid
@@ -149,6 +150,7 @@ def ImageUpload(request,pkk):
     usercollection_obj.collection_count=image_count
     usercollection_obj.save()
     print(cid)
+    img_file_list.clear()
 
 
     return redirect('userpage')
