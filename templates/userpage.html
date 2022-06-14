@@ -7,52 +7,65 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
-	<script defer src="https://unpkg.com/alpinejs@3.9.0/dist/cdn.min.js"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.9.0/dist/cdn.min.js"></script>
     <title>FILDrop</title>
 </head>
 
 <body>
     <!-- Section 1 -->
-<section class="w-full px-8 text-gray-700 bg-white">
-    <div class="container flex flex-col flex-wrap items-center justify-between py-5 mx-auto md:flex-row max-w-7xl">
-        <div class="relative flex flex-col md:flex-row">
-            <a href="#_" class="flex items-center mb-5 font-medium text-gray-900 lg:w-auto lg:items-center lg:justify-center md:mb-0">
-                <span class="mx-auto text-xl font-black leading-none text-gray-900 select-none">FILDrop<span class="text-indigo-600">.</span></span>
-            </a>
-            <nav class="flex flex-wrap items-center mb-5 text-base md:mb-0 md:pl-8 md:ml-8 md:border-l md:border-gray-200">
-                <a href="#_" class="mr-5 font-medium leading-6 text-gray-600 hover:text-gray-900"></a>
-                <a href="#_" class="mr-5 font-medium leading-6 text-gray-600 hover:text-gray-900">Dashboard</a>
-                <a href="#_" class="mr-5 font-medium leading-6 text-gray-600 hover:text-gray-900"></a>
-            </nav>
-        </div>
+    <section class="w-full px-8 text-gray-700 bg-white">
+        <div class="container flex flex-col flex-wrap items-center justify-between py-5 mx-auto md:flex-row max-w-7xl">
+            <div class="relative flex flex-col md:flex-row">
+                <a href="#_"
+                    class="flex items-center mb-5 font-medium text-gray-900 lg:w-auto lg:items-center lg:justify-center md:mb-0">
+                    <span class="mx-auto text-xl font-black leading-none text-gray-900 select-none">FILDrop<span
+                            class="text-indigo-600">.</span></span>
+                </a>
+                <nav
+                    class="flex flex-wrap items-center mb-5 text-base md:mb-0 md:pl-8 md:ml-8 md:border-l md:border-gray-200">
+                    <a href="#_" class="mr-5 font-medium leading-6 text-gray-600 hover:text-gray-900"></a>
+                    <a href="#_" class="mr-5 font-medium leading-6 text-gray-600 hover:text-gray-900">Dashboard</a>
+                    <a href="#_" class="mr-5 font-medium leading-6 text-gray-600 hover:text-gray-900"></a>
+                </nav>
+            </div>
 
-        <div class="inline-flex items-center ml-5 space-x-6 lg:justify-end">
-                <button class="inline-flex items-center justify-center px-4 py-2 text-base font-medium leading-6 text-white whitespace-no-wrap bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600" id="connect-wallet"> 👛{{WalletAddress|truncatechars:12}}</button>
+            <div class="inline-flex items-center ml-5 space-x-6 lg:justify-end">
+                <button
+                    class="inline-flex items-center justify-center px-4 py-2 text-base font-medium leading-6 text-white whitespace-no-wrap bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
+                    id="connect-wallet"> 👛{{WalletAddress|truncatechars:12}}</button>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<br /><br />
-<div x-data="{showen:true}" class='flex items-center justify-center from-teal-50 via-teal-75 to-teal-100 '>
-    <form action="{% url 'addCollection' %}" method="POST">
-    {% csrf_token %}
-    <div class='w-full max-w-lg px-10 py-8 mx-auto bg-white rounded-lg shadow-xl'>
-    <input class="pl-11 text-gray-800 pr-4 pr-11 py-2 border-gray-600 rounded-md focus:border-gray-400 focus:ring
+    <br /><br />
+    <div x-data="{showen:true}" class='flex items-center justify-center from-teal-50 via-teal-75 to-teal-100 '>
+        <form action="{% url 'addCollection' %}" method="POST">
+            {% csrf_token %}
+            <div class='w-full max-w-lg px-10 py-8 mx-auto bg-white rounded-lg shadow-xl'>
+                <input class="pl-11 text-gray-800 pr-4 pr-11 py-2 border-gray-600 rounded-md focus:border-gray-400 focus:ring
     focus:ring-gray-800 ring-gray-400 ring focus:ring-offset-2 focus:ring-offset-white dark:border-gray-600 dark:bg-primary-darker
-    dark:focus:ring-offset-dark-eval-1 block w-full" type="text" name="collection-item" required="required" placeholder="collection">
-    <br />
-    <button type="submit" class="ml-2 border-2 border-green-500 p-2 text-green-500 hover:text-white hover:bg-green-500 rounded-lg flex">   
-        <svg class="h-6 w-6"  width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <circle cx="12" cy="12" r="9" />  <line x1="9" y1="12" x2="15" y2="12" />  <line x1="12" y1="9" x2="12" y2="15" /></svg>
-        <span>Add</span>
-        </button>
-    </div>               
-    </form>
-</div>
-    
+    dark:focus:ring-offset-dark-eval-1 block w-full" type="text" name="collection-item" required="required"
+                    placeholder="collection">
+                <br />
+                <button type="submit"
+                    class="ml-2 border-2 border-green-500 p-2 text-green-500 hover:text-white hover:bg-green-500 rounded-lg flex">
+                    <svg class="h-6 w-6" width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
+                        stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" />
+                        <circle cx="12" cy="12" r="9" />
+                        <line x1="9" y1="12" x2="15" y2="12" />
+                        <line x1="12" y1="9" x2="12" y2="15" />
+                    </svg>
+                    <span>Add</span>
+                </button>
+            </div>
+        </form>
+    </div>
 
 
-{% for i in usercollection_objects %}
-{% if i.is_active %}
+
+    {% for i in usercollection_objects %}
+    {% if i.is_active %}
     <div class="extraOutline p-4 bg-white w-max bg-whtie m-auto rounded-lg">
         <div class="max-w-xl px-5 text-center">
             <br>
@@ -60,21 +73,30 @@
             <br>
         </div>
         <form method="post" enctype="multipart/form-data" action="{% url 'imageUpload' i.id %}">
-            <div class="file_upload p-5 relative border-4 border-dotted border-gray-300 rounded-lg" style="width: 450px">
-                <svg class="text-indigo-500 w-24 mx-auto mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" /></svg>
+            <div class="file_upload p-5 relative border-4 border-dotted border-gray-300 rounded-lg"
+                style="width: 450px">
+                <svg class="text-indigo-500 w-24 mx-auto mb-4" xmlns="http://www.w3.org/2000/svg" fill="none"
+                    viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                </svg>
                 <div class="input_field flex flex-col w-max mx-auto text-center">
-            {% csrf_token %}
-            <input class="text bg-indigo-600 text-white border border-gray-300 rounded font-semibold cursor-pointer p-1 px-3 hover:bg-indigo-500" name="allimages" type="file" value="Select" required multiple>
-            <br>
-            <br>
+                    {% csrf_token %}
+                    <input
+                        class="text bg-indigo-600 text-white border border-gray-300 rounded font-semibold cursor-pointer p-1 px-3 hover:bg-indigo-500"
+                        name="allimages" type="file" value="Select" required multiple>
+                    <br>
+                    <br>
+                </div>
             </div>
-        </div>
-        <div class="max-w-xl px-5 text-center">
-        <button class="mt-3 inline-block w-96 rounded bg-indigo-600 px-5 py-3 font-medium text-white shadow-md shadow-indigo-500/20 hover:bg-indigo-700" type="submit">Upload</button>
-        </div>
-        </form> 
+            <div class="max-w-xl px-5 text-center">
+                <button
+                    class="mt-3 inline-block w-96 rounded bg-indigo-600 px-5 py-3 font-medium text-white shadow-md shadow-indigo-500/20 hover:bg-indigo-700"
+                    type="submit">Upload</button>
+            </div>
+        </form>
         <br>
-        <br>     
+        <br>
     </div>
     {% endif %}
     {% endfor %}
@@ -85,21 +107,33 @@
     {% for i in data %}
     <section class="overflow-hidden text-gray-700">
         <br><br>
-        <center><h3 class="mb-2 text-[28px] font-bold text-zinc-800">{{i.0}}</h3></center>
+        <center>
+            <h3 class="mb-2 text-[28px] font-bold text-zinc-800">{{i.0}}
+
+                <form action="{% url 'deploy' i.0  %}" method="POST">
+                    {% csrf_token %}
+
+                    <input type="submit" value="Deploy">
+                </form>
+
+
+            </h3>
+        </center>
         <div class="container px-5 py-2 mx-auto lg:pt-12 lg:px-32">
             <div class="flex flex-wrap -m-1 md:-m-2">
-                
-        {% for j in i.2 %}
-            <div class="flex flex-wrap w-1/3">
-                <div class="w-full p-1 md:p-2">
-                    <img class="block object-cover object-center w-full h-full rounded-lg" src="https://ipfs.io/ipfs/{{j}}/{{ forloop.counter }}" />
+
+                {% for j in i.2 %}
+                <div class="flex flex-wrap w-1/3">
+                    <div class="w-full p-1 md:p-2">
+                        <img class="block object-cover object-center w-full h-full rounded-lg"
+                            src="https://ipfs.io/ipfs/{{j}}/{{ forloop.counter }}" />
+                    </div>
                 </div>
+                {% endfor %}
+                <br />
             </div>
-        {% endfor %}
-        <br />
-    </div>
-    </div>
-    </div>
+        </div>
+        </div>
     </section>
     <br>
     {% endfor %}
