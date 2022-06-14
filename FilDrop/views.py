@@ -134,63 +134,12 @@ def ImageUpload(request,pkk):
     nstorage = {}
     c = NftStorage(NFTSTORAGE_API_KEY)
     cid = c.upload(img_file_list, 'image/png')
+    usercollection_obj = UserCollection.objects.get(id=pkk)
+    usercollection_obj.collection_hash=cid
+    usercollection_obj.is_active=False
+    usercollection_obj.save()
     print('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
     print(cid)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    # print('')
-    # print(img_file_list)
-    # print('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
-
-    # nstorage = {}
-    # c = NftStorage(NFTSTORAGE_API_KEY)
-    # cid = c.upload(img_file_list, 'image/png')
-    # img_hash = cid
-    # nstorage['image_directory_cid'] = cid
-    # token = {
-    #         "image": base_uri + str(k) + '.png',
-    #         "tokenId": k,
-    #         "name": project_name + ' ' + "#" + str(k),
-    #         "attributes": meta
-    #     }
-    
-    
-    # update_meta_cid(meta_file_list, cid)
-        # upload
-    # print(meta_file_list)
-    
-    
-    
-    # print(user_d[tuser.id]['meta_files'])
-
-
-
-    
-    
-    #change names
-    # print('---------------------------------------')
-    # print(full_path)
-    # count_i = 1
-    # for file_ in os.listdir(full_path):
-    #     print(file_)
-    #     os.rename(file_,str(count_i))
-    #     count_i = count_i+1
-
 
 
     return redirect('userpage')
