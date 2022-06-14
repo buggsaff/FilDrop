@@ -6,5 +6,6 @@ urlpatterns = [
     path('login/',Login,name='login'),
     path('user/',UserPage, name='userpage'),
     path('addCollection/',AddCollection,name='addCollection'),
-    path('imageUpload/<int:pkk>/',ImageUpload,name='imageUpload')
+    path('imageUpload/<int:pkk>/',ImageUpload,name='imageUpload'),
+    path('deploy/<str:collectionname>/',Deploy,name='deploy')
 ]

@@ -51,7 +51,9 @@
     <img src="https://ipfs.io/ipfs/{{j}}/{{ forloop.counter }}" />
     <br />
     {% endfor %}
-    <form action="" method="POST">
+    <form action="{% url 'deploy' i.0  %}" method="POST">
+        {% csrf_token %}
+
         <input type="submit" value="Deploy">
     </form>
     <br />

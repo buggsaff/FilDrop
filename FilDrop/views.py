@@ -162,6 +162,13 @@ def ImageUpload(request,pkk):
 
 
 
-    # full_path = os.path.normpath(str(BASE_DIR)+str('/')+str(pkk)+"/images/"+str(usercollection_obj.collection_name))
-    ############################################################
-    # metadata_path = os.path.normpath(str(BASE_DIR)+str('/')+str(pkk)+str(usercollection_obj.collection_name)+'/metadata//')
+def Deploy(request,collectionname):
+
+
+    return render(request,'deploy.html')
+
+
+
+# full_path = os.path.normpath(str(BASE_DIR)+str('/')+str(pkk)+"/images/"+str(usercollection_obj.collection_name))
+############################################################
+# metadata_path = os.path.normpath(str(BASE_DIR)+str('/')+str(pkk)+str(usercollection_obj.collection_name)+'/metadata//')
