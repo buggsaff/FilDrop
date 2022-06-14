@@ -14,6 +14,7 @@ class UserCollection(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     collection_hash = models.CharField(max_length=255, null=True, blank=True)
     collection_name = models.CharField(max_length=255, null=True, blank=True)
+    collection_count = models.IntegerField(default=0)
     is_active = models.BooleanField(default=True)
     
     def __str__(self):

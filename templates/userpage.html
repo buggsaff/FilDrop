@@ -22,6 +22,7 @@
 
 
     {% for i in usercollection_objects %}
+    {% if i.is_active %}
     <div>
 
         <form method="post" enctype="multipart/form-data" action="{% url 'imageUpload' i.id %}">
@@ -33,6 +34,7 @@
             <br>
         </form>
     </div>
+    {% endif %}
 
     {% endfor %}
 
@@ -40,10 +42,17 @@
     <br>
     <br>
 
-    <img src="https://ipfs.io/ipfs/bafybeiae3ibdswp3poi56uhmcjorzuz7otbd2q6wxukatzq7mgwgfg6xme/2">
+    <!-- <img src="https://ipfs.io/ipfs/bafybeiae3ibdswp3poi56uhmcjorzuz7otbd2q6wxukatzq7mgwgfg6xme/2"> -->
 
+    {% for i in data %}
+    collection name:{{i.0}}
+    {% for j in i.2 %}
 
-
+    <img src="https://ipfs.io/ipfs/{{j}}/{{ forloop.counter }}" />
+    <br />
+    {% endfor %}
+    <br />
+    {% endfor %}
 </body>
 
 </html>

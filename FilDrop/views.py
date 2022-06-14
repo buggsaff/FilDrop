@@ -6,12 +6,10 @@ from pathlib import Path
 from utility.nftstorage import NftStorage
 import json
 
-#global Keys
 base_uri = "ipfs://"
 NFTSTORAGE_API_KEY = keys['NFTSTORAGE']
 PINATA_JWT = keys['PINATA']
 
-#project_name= "Test_Pro"
 
 img_file_list = [] 
 meta_file_list = []
@@ -51,17 +49,33 @@ def UserPage(request):
     WalletAddress = request.session['WalletAddress']
     user = User.objects.get(WalletAddress=WalletAddress)
     usercollection_objects=None
+    data=[]
     try:
         usercollection_objects=UserCollection.objects.filter(user=user)
+        for i in usercollection_objects:
+            temp = []
+            for j in range(i.collection_count):
+                temp.append(i.collection_hash)
+
+            data.append([i.collection_name,i.collection_hash,temp])
+
+        # for i in range(len(usercollection_objects)):
+        #     print('i---'+str(i))
+        #     for j in range(i.collection_count):
+        #         temp = []
+        #         print('j---'+str(j))
+        #         temp.append('https://ipfs.io/ipfs/'+ usercollection_objects[i][j][collection_hash]+str(j))
+        #         data.append(temp)
+                
     except:
+        print('fuk')
         usercollection_objects = None
 
-    try:
-        user_c_img = UserCollectionImage.objects.filter(user=user)
-    except:
-        user_c_img = None
-
-    return render(request,'userpage.html',{'WalletAddress':WalletAddress,'usercollection_objects':usercollection_objects,'user_c_img':user_c_img})
+    print('Hello world dta')
+    print(data)
+    print(usercollection_objects)
+    print(type(usercollection_objects))
+    return render(request,'userpage.html',{'WalletAddress':WalletAddress,'usercollection_objects':usercollection_objects,'data':data})
 
 def update_meta_cid(file, cid):
     for i in file:
@@ -83,14 +97,10 @@ def ImageUpload(request,pkk):
     usercollection_obj = UserCollection.objects.get(id=pkk)
     meta_file_list = []
     user = User.objects.get(WalletAddress=WalletAddress)
-    # full_path = os.path.normpath(str(BASE_DIR)+str('/')+str(pkk)+"/images/"+str(usercollection_obj.collection_name))
-    ############################################################
-    metadata_path = os.path.normpath(str(BASE_DIR)+str('/')+str(pkk)+str(usercollection_obj.collection_name)+'/metadata//')
-    print(pkk)
 
-    path =Path(os.path.normpath( str(BASE_DIR) + '/'+ str(pkk) + '/'+str(usercollection_obj.collection_name)+'/metadata/'))
+    path =Path(os.path.normpath( str(BASE_DIR) + '/'+ str(user.id) + '/'+str(usercollection_obj.collection_name)+'/metadata/'))
     print(path)
-    path_images =Path(os.path.normpath( str(BASE_DIR) + '/'+ str(pkk) + '/'+str(usercollection_obj.collection_name)+'/images/'))
+    path_images =Path(os.path.normpath( str(BASE_DIR) + '/'+ str(user.id) + '/'+str(usercollection_obj.collection_name)+'/images/'))
 
 
     try:
@@ -98,8 +108,7 @@ def ImageUpload(request,pkk):
     except Exception as e:
         print(e)
     
-
-    ############
+    count_image=0
     images = {}
     image_count = 0
     for f in files:
@@ -113,10 +122,6 @@ def ImageUpload(request,pkk):
     for filename in os.listdir(path_images):
         img_file_list.append(str(Path(os.path.normpath(str(path_images)+'\\'+str(filename)))))
     
-    print('-----------------------------')
-    print(img_file_list)
-
-
     for k in img_file_list:
         image_count +=1
         token = {
@@ -127,7 +132,7 @@ def ImageUpload(request,pkk):
         meta_file =   Path(str(path)+'/' + str(image_count) + '.json')
         meta_file_list.append(meta_file)
         print(meta_file)
-
+    
         with open(meta_file, 'w') as outfile:
             json.dump(token, outfile, indent=4)
     
@@ -137,9 +142,26 @@ def ImageUpload(request,pkk):
     usercollection_obj = UserCollection.objects.get(id=pkk)
     usercollection_obj.collection_hash=cid
     usercollection_obj.is_active=False
+    usercollection_obj.collection_count=image_count
     usercollection_obj.save()
-    print('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
     print(cid)
 
 
     return redirect('userpage')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    # full_path = os.path.normpath(str(BASE_DIR)+str('/')+str(pkk)+"/images/"+str(usercollection_obj.collection_name))
+    ############################################################
+    # metadata_path = os.path.normpath(str(BASE_DIR)+str('/')+str(pkk)+str(usercollection_obj.collection_name)+'/metadata//')
