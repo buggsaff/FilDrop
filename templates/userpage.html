@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,6 +12,37 @@
 <body>
     User page
     {{WalletAddress}}
+    <form action="{% url 'addCollection' %}" method="POST">
+        {% csrf_token %}
+        <input type="text" name="collection-item"><input type="submit" value="+">
+    </form>
+
+    <br />
+
+
+
+    {% for i in usercollection_objects %}
+    <div>
+
+        <form method="post" enctype="multipart/form-data" action="{% url 'imageUpload' i.id %}">
+            {% csrf_token %}
+            <p> {{i.collection_name}} </p>
+            <input name="allimages" type="file" required multiple>
+            <br>
+            <button type="submit">Upload</button>
+            <br>
+        </form>
+    </div>
+
+    {% endfor %}
+
+
+    <br>
+    <br>
+
+
+
+
 </body>
 
 </html>
