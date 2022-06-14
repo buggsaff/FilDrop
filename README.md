@@ -30,6 +30,3 @@ python manage.py runserver
 
 ![dashboard](Dashboard.png)
 
-#### IPFS
-
-![ipfs](IPFS Response.png)
