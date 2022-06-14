@@ -103,7 +103,6 @@ def ImageUpload(request,pkk):
     images = {}
     image_count = 0
     for f in files:
-        img_file_list.append(f)
         a = UserCollectionImage.objects.get_or_create(usercollection=usercollection_obj,image=f,user=user)
 
     i=1
@@ -111,7 +110,13 @@ def ImageUpload(request,pkk):
         os.rename(os.path.join(path_images,filename),os.path.join(path_images,str(i)+'.jpg'))
         i+=1
     
-    print('updated')
+    for filename in os.listdir(path_images):
+        img_file_list.append(str(Path(os.path.normpath(str(path_images)+'\\'+str(filename)))))
+    
+    print('-----------------------------')
+    print(img_file_list)
+
+
     for k in img_file_list:
         image_count +=1
         token = {
@@ -122,10 +127,31 @@ def ImageUpload(request,pkk):
         meta_file =   Path(str(path)+'/' + str(image_count) + '.json')
         meta_file_list.append(meta_file)
         print(meta_file)
-        print('sncdscksccccccccccccccccccccc')
 
         with open(meta_file, 'w') as outfile:
             json.dump(token, outfile, indent=4)
+    
+    nstorage = {}
+    c = NftStorage(NFTSTORAGE_API_KEY)
+    cid = c.upload(img_file_list, 'image/png')
+    print('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
+    print(cid)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     # print('')
     # print(img_file_list)
