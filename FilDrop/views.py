@@ -8,7 +8,6 @@ import json
 import shutil
 from pathlib2 import Path as Path2_
 import requests
-
 base_uri = "ipfs://"
 NFTSTORAGE_API_KEY = keys['NFTSTORAGE']
 PINATA_JWT = keys['PINATA']
@@ -154,20 +153,14 @@ def ImageUpload(request,pkk):
     usercollection_obj.save()
     print(cid)
     img_file_list.clear()
+    user_id = str(user.id)
+    try:
+        shutil.rmtree(user_id)
+    except OSError as e:
+        print ("Error: %s - %s." % (e.filename, e.strerror))
 
 
     return redirect('userpage')
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -176,45 +169,70 @@ def Deploy(request,collectionname):
     path2 =Path(os.path.normpath( str(BASE_DIR) +'/contracts/NFT.sol'))
     WalletAddress = request.session['WalletAddress']
     print(WalletAddress)
-    url = "https://api.nftport.xyz/v0/contracts"
-    payload = "{\n  \"chain\": \"polygon\",\n  \"name\": \"CRYPTOPUNKS\",\n  \"symbol\": \"CYBER\",\n  \"owner_address\":wallet,\n  \"metadata_updatable\": false,\n  \"type\": \"erc721\"\n}"
+
+
+
+    user = User.objects.get(WalletAddress=WalletAddress)
+    obj = UserCollection.objects.get(collection_name=collectionname,user=user)
+    print(obj.collection_hash)
+    shutil.copyfile(path,path2)
+    file = Path2_(path2)
+    data = file.read_text()
+    data = data.replace("USER_ADDRESS", WalletAddress)
+    file.write_text(data)
     
 
-    payload = payload.replace('CRYPTOPUNKS',"NFTGEN")
-    payload = payload.replace('CYBER',"MATIC")
-    payload = payload.replace('wallet','"'+WalletAddress+'"')
-
-    headers = {
-        'Content-Type': "application/json",
-        'Authorization': "4c658b59-2263-4cb8-a3c4-dacca73e4700"
-    }
-
-    response = requests.request("POST", url, data=payload, headers=headers)
-    #print(response.text)
-    print('--------------------')
-    print(response)
-    return render(request,'deploy.html',{'response':response.text})
 
 
+    file = Path2_(path2)
+    data = file.read_text()
+    data = data.replace("TOKENURI", str("https://ipfs.io/ipfs/")+str(obj.collection_hash))
+    file.write_text(data)
+    #https://mumbai.polygonscan.com/tx/0xec4fb2c38a2cee48c6019c009c0866850d793533e5511d96ab3ece421a67fc2b
+
+    try:
+        shutil.rmtree("contracts/artifacts")
+        shutil.rmtree("contracts/cache")
+    except OSError as e:
+        print ("Error: %s - %s." % (e.filename, e.strerror))
+
+    q = open('address.txt','r')
+    pqrq=q.readline()
+    print(pqrq)
+    
+    deployed_url = "https://mumbai.polygonscan.com/tx/"+str(pqrq)
+    print('xxxxxxxxxxxxxxxxxxx')
+    print(deployed_url)
+
+    os.system("npx hardhat run scripts/deploy.js --network mumbai")
+    return render(request,'deploy.html',{'response':deployed_url})
 
 
-    # user = User.objects.get(WalletAddress=WalletAddress)
-    # obj = UserCollection.objects.get(collection_name=collectionname,user=user)
-    # print(obj.collection_hash)
-    # shutil.copyfile(path,path2)
-    # file = Path2_(path2)
-    # data = file.read_text()
-    # WalletAddress="0x4cAF27060d1543cF78f1E9f479baA5073fEf9BF5"
-    # data = data.replace("USER_ADDRESS", WalletAddress)
-    # file.write_text(data)
 
-    # file = Path2_(path2)
-    # data = file.read_text()
-    # data = data.replace("TOKENURI", str("https://ipfs.io/ipfs/")+str(obj.collection_hash))
-    # file.write_text(data)
+
+    # url = "https://api.nftport.xyz/v0/contracts"
+    # payload = "{\n  \"chain\": \"polygon\",\n  \"name\": \"CRYPTOPUNKS\",\n  \"symbol\": \"CYBER\",\n  \"owner_address\":wallet,\n  \"metadata_updatable\": false,\n  \"type\": \"erc721\"\n}"
+    
+
+    # payload = payload.replace('CRYPTOPUNKS',"NFTGEN")
+    # payload = payload.replace('CYBER',"MATIC")
+    # payload = payload.replace('wallet','"'+WalletAddress+'"')
+
+    # headers = {
+    #     'Content-Type': "application/json",
+    #     'Authorization': "4c658b59-2263-4cb8-a3c4-dacca73e4700"
+    # }
+
+    # response = requests.request("POST", url, data=payload, headers=headers)
+    # #print(response.text)
+    # print('--------------------')
+    # print(response)
+
+
+
+
 
     
-    # os.system("npx hardhat run scripts/deploy.js")
 
 
 

@@ -237,7 +237,7 @@
                 method: 'eth_requestAccounts'
             });
             console.log(allWalletAccounts);
-            document.getElementById('WalletAddress').value = allWalletAccounts[0];
+            document.getElementById('WalletAddress').value = ethers.utils.getAddress(allWalletAccounts[0]);  //checksum fix
             document.getElementById('submit-button').click();
         }
     }
