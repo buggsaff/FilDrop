@@ -1,15 +1,32 @@
-# Basic Sample Hardhat Project
+# FilDrop
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, a sample script that deploys that contract, and an example of a task implementation, which simply lists the available accounts.
+Backup your images to IPFS storage and convert them into NFTs.
 
-Try running some of the following tasks:
 
-```shell
-npx hardhat accounts
-npx hardhat compile
-npx hardhat clean
-npx hardhat test
-npx hardhat node
-node scripts/sample-script.js
-npx hardhat help
+## Clone this repo
+
+```bash
+git clone https://github.com/meta-ps/FilDrop/
 ```
+
+## Run
+
+Make sure you have `python` and `Django` install then run
+
+```python
+python manage.py makemigrations
+python manage.py migrate
+python manage.py runserver
+```
+
+## UI
+
+### Home Page
+
+![home](Home.png)
+
+
+### Dashboard
+
+![dashboard](Dashboard.png)
+
