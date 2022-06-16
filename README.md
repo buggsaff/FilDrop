@@ -23,10 +23,10 @@ python manage.py runserver
 
 ### Home Page
 
-![home](Home.png)
+![home](assets/Home.png)
 
 
 ### Dashboard
 
-![dashboard](Dashboard.png)
+![dashboard](assets/Dashboard.png)
 
