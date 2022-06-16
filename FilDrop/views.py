@@ -196,15 +196,18 @@ def Deploy(request,collectionname):
     except OSError as e:
         print ("Error: %s - %s." % (e.filename, e.strerror))
 
+
+    os.system("npx hardhat run scripts/deploy.js --network mumbai")
+
+
     q = open('address.txt','r')
-    pqrq=q.readline()
+    pqrq=q.read()
     print(pqrq)
     
     deployed_url = "https://mumbai.polygonscan.com/tx/"+str(pqrq)
     print('xxxxxxxxxxxxxxxxxxx')
     print(deployed_url)
 
-    os.system("npx hardhat run scripts/deploy.js --network mumbai")
     return render(request,'deploy.html',{'response':deployed_url})
 
 
