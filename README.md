@@ -30,3 +30,16 @@ python manage.py runserver
 
 ![dashboard](assets/Dashboard.png)
 
+## Usage of Technologies
+
+### IPFS
+
+The following python code is used for IPFS upload
+https://github.com/meta-ps/FilDrop/blob/master/utility/nftstorage.py
+
+### Polygon
+
+The following smart contract is used to deploy the NFT:
+https://github.com/meta-ps/FilDrop/blob/master/contracts/NFT.sol
+Hardhat Configuration for Polygon-Mumbai Testnet:
+https://github.com/meta-ps/FilDrop/blob/master/scripts/deploy.js
