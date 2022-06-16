@@ -14,7 +14,8 @@ git clone https://github.com/meta-ps/FilDrop/
 Make sure you have `python` and `Django` install then run
 
 ```python
-python manage.py makemigrations
+npm i
+python manage.py makemigrations FilDrop
 python manage.py migrate
 python manage.py runserver
 ```
